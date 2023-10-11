@@ -11,7 +11,7 @@ from typing import TYPE_CHECKING, cast
 from cryptography.hazmat.primitives import serialization
 from cryptography.x509 import Certificate, load_der_x509_certificate
 
-from . import devices, ssl_workaround
+from . import devices
 from .const import MIN_PROTOCOL_VERSION
 from .helpers import get_timestamp
 from .payloads import (
@@ -376,6 +376,6 @@ class SSLContextFactory:
                 serialization.Encoding.DER
             ))
         else:
-            ssl_workaround.set_verify_always_pass(ctx, True)
+            ctx.verify_mode = ssl.VerifyMode.CERT_NONE
 
         return ctx
